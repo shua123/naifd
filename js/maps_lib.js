@@ -21,24 +21,24 @@ var MapsLib = {
 
   //the encrypted Table ID of your Fusion Table (found under File => About)
   //NOTE: numeric IDs will be depricated soon
-  fusionTableId:      "1m4Ez9xyTGfY2CU6O-UgEcPzlS0rnzLU93e4Faa0",
+  fusionTableId:      "1iK_5ekxipPJyxyLreYX1YewUU4WE9PnZBT6jXzQ",
 
   //*New Fusion Tables Requirement* API key. found at https://code.google.com/apis/console/
   //*Important* this key is for demonstration purposes. please register your own.
-  googleApiKey:       "AIzaSyA3FQFrNr5W2OEVmuENqhb2MBB2JabdaOY",
+  googleApiKey:       "AIzaSyDOGOewmVoa8Y7Okz_Nc1zNI36UzbOC0wY",
 
   //name of the location column in your Fusion Table.
   //NOTE: if your location column name has spaces in it, surround it with single quotes
   //example: locationColumn:     "'my location'",
-  locationColumn:     "geometry",
+  locationColumn:     "Geocode",
 
-  map_centroid:       new google.maps.LatLng(41.8781136, -87.66677856445312), //center that your map defaults to
+  map_centroid:       new google.maps.LatLng(39.50, -98.35), //center that your map defaults to
   locationScope:      "chicago",      //geographical area appended to all address searches
   recordName:         "result",       //for showing number of results
   recordNamePlural:   "results",
 
   searchRadius:       805,            //in meters ~ 1/2 mile
-  defaultZoom:        11,             //zoom level when map is loaded (bigger is more zoomed in)
+  defaultZoom:        4,             //zoom level when map is loaded (bigger is more zoomed in)
   addrMarkerImage:    'images/blue-pushpin.png',
   currentPinpoint:    null,
 
@@ -73,6 +73,12 @@ var MapsLib = {
     $("#result_box").hide();
     
     //-----custom initializers-------
+
+  
+
+  
+
+    
     
     //-----end of custom initializers-------
 
@@ -102,7 +108,7 @@ var MapsLib = {
           $.address.parameter('address', encodeURIComponent(address));
           $.address.parameter('radius', encodeURIComponent(MapsLib.searchRadius));
           map.setCenter(MapsLib.currentPinpoint);
-          map.setZoom(14);
+          map.setZoom(10);
 
           MapsLib.addrMarker = new google.maps.Marker({
             position: MapsLib.currentPinpoint,
@@ -144,6 +150,15 @@ var MapsLib = {
     });
     MapsLib.searchrecords.setMap(map);
     MapsLib.getCount(whereClause);
+    google.maps.event.addListener(MapsLib.searchrecords, 'click', function(e) {
+            // Change the content of the InfoWindow
+          e.infoWindowHtml = e.row['Facility_Name'].value + "<br>";
+
+          // If the delivery == yes, add content to the window
+          // if (e.row['delivery'].value == 'yes') {
+          //   e.infoWindowHtml += "Delivers!";
+          // }
+    });
   },
 
   clearSearch: function() {
@@ -269,5 +284,16 @@ var MapsLib = {
   // NOTE: if you add custom functions, make sure to append each one with a comma, except for the last one.
   // This also applies to the convertToPlainString function above
   
+  // Open the info window at the clicked location
+  // windowControl: function(e, infoWindow, map) {
+  //      infoWindow.setOptions({
+  //         content: e.infoWindowHtml,
+  //         position: e.latLng,
+  //         pixelOffset: e.pixelOffset
+  //       });
+  //       infoWindow.open(map);
+  // }
+
+
   //-----end of custom functions-------
 }
