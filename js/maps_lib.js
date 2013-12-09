@@ -33,12 +33,12 @@ var MapsLib = {
   locationColumn:     "Geocode",
 
   map_centroid:       new google.maps.LatLng(39.50, -98.35), //center that your map defaults to
-  locationScope:      "chicago",      //geographical area appended to all address searches
+  locationScope:      "",      //geographical area appended to all address searches
   recordName:         "result",       //for showing number of results
   recordNamePlural:   "results",
 
   searchRadius:       805,            //in meters ~ 1/2 mile
-  defaultZoom:        4,             //zoom level when map is loaded (bigger is more zoomed in)
+  defaultZoom:        3,             //zoom level when map is loaded (bigger is more zoomed in)
   addrMarkerImage:    'images/blue-pushpin.png',
   currentPinpoint:    null,
 
@@ -152,13 +152,28 @@ var MapsLib = {
     MapsLib.getCount(whereClause);
     google.maps.event.addListener(MapsLib.searchrecords, 'click', function(e) {
             // Change the content of the InfoWindow
-          e.infoWindowHtml = e.row['Facility_Name'].value + "<br>";
+          e.infoWindowHtml = "<b>Facility Type: </b>" + e.row['Facility_Type'].value + "<br>";
+          if (e.row['Rail_URL'].value != '' ) {
+            e.infoWindowHtml += "<b>Servicing Railroad: </b>" + e.row['Rail_URL'].value + "<br>";
+          }
+          e.infoWindowHtml += "<b>Address: </b>" + e.row['Address1'].value + "<br>";
+          if (e.row['Address2'].value != '' ) {
+            e.infoWindowHtml += e.row['Address2'].value + "<br>";
+          }
+          e.infoWindowHtml += "<b>City: </b>" + e.row['City'].value + "<br>";
+          e.infoWindowHtml += "<b>State or Province: </b>" + e.row['State_Province'].value + "<br>";
+          e.infoWindowHtml += "<b>Postal Code: </b>" + e.row['Postal_Code'].value + "<br>";
+          e.infoWindowHtml += "<b>Country: </b>" + e.row['Country'].value + "<br>";
+          e.infoWindowHtml += "<b>Telephone: </b>" + e.row['Telephone'].value + "<br>";
+          if (e.row['Email'].value != '' ) {
+            e.infoWindowHtml += "<b>Email: </b>" + e.row['Email'].value + "<br>";
+          }
+          if (e.row['Web_URL'].value != '' ) {
+            e.infoWindowHtml += "<b>Website: </b>" + e.row['Web_URL'].value + "<br>";
+          }
 
-          // If the delivery == yes, add content to the window
-          // if (e.row['delivery'].value == 'yes') {
-          //   e.infoWindowHtml += "Delivers!";
-          // }
     });
+    MapsLib.getList(whereClause);
   },
 
   clearSearch: function() {
@@ -256,6 +271,41 @@ var MapsLib = {
       });
     $( "#result_box" ).fadeIn();
   },
+
+  getList: function(whereClause) {
+  var selectColumns = "Facility_Type, Facility_Name, City, State_Province, Country";
+  MapsLib.query(selectColumns, whereClause, "MapsLib.displayList");
+},
+
+displayList: function(json) {
+  MapsLib.handleError(json);
+  var data = json["rows"];
+  var template = "";
+
+  var results = $("#results_list");
+  results.hide().empty(); //hide the existing list and empty it out first
+
+  if (data == null) {
+    //clear results list
+    results.append("<li><span class='lead'>No results found</span></li>");
+  }
+  else {
+    template = "<table class='table table-bordered table-hover table-condensed'>";
+    template = template.concat("<thead><tr><th>Type</th><th>Name</th><th>City</th><th>State</th><th>Country</th></tr></thead>");
+    template = template.concat("<tbody>");
+    for (var row in data) {
+       template = template.concat("<tr><td>" + data[row][0] + "</td><td>" + data[row][1] + "</td><td>" + data[row][2] + "</td><td>" + data[row][3] + "</td><td>" + data[row][4] + "</td></tr>");
+       // results.append("<td>" + data[row][1] + "</td>");
+       // results.append("<td>" + data[row][2] + "</td>");
+       // results.append("<td>" + data[row][3] + "</td>");
+       // results.append("/tr>");
+
+    }
+    template = template.concat("</tbody></table>");
+    results.append(template);
+  }
+  results.fadeIn();
+},
 
   addCommas: function(nStr) {
     nStr += '';

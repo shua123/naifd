@@ -3,11 +3,12 @@
   <head>
     <title>Intermodal Directory</title>
     <meta charset='utf-8' />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     <meta content='' name='description' />
     <meta content='' name='author' />
     <!-- Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <!-- <link rel="stylesheet" href="css/bootstrap.css"/> -->
     <link rel="stylesheet" href="css/custom.css"/>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -15,26 +16,8 @@
     <![endif]-->
   </head>
   <body>
-<!--     <div class='navbar navbar-default navbar-static-top'>
-      <div class='container'>
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class='navbar-brand' href='index.html'>Intermodal Directory</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li class='active'><a href="index.html">Map</a></li>
-            <li><a href="#">About</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-<!--      </div>
-    </div> -->
-    <div class='container'>
-      <div class='col-md-12'>
+    <div>
+      <div class='span9'>
           <noscript>
             <div class='alert alert-info'>
               <h4>Your JavaScript is disabled</h4>
@@ -42,20 +25,19 @@
             </div>
           </noscript>
           <div id='map_canvas'></div>
-          <p class='pull-right'>
-            <a href='http://derekeder.com/searchable_map_template/'>Searchable Map Template</a> by <a href='http://derekeder.com'>Derek Eder</a>.
-        </p>
-        </div>
-      <div class='row'>
-        <div class='col-md-4'>
-          <p>This is a demo of <a href='http://derekeder.com'>Derek Eder's</a> <a href='http://derekeder.com/searchable_map_template/'>Searchable Map Template</a> using Google <a href='http://support.google.com/fusiontables/answer/2571232?hl=en&ref_topic=1652595'>Fusion Tables</a>. Use this section to give a little context your map.</p>
-          <div class='well'>
+      </div>
+      <div id='results_canvas' class='span2' >
+        <div id='results_list' ></div>
+
+        
+      </div> 
+      <div class='span12'>
             <h4>
               Address <small>(<a id='find_me' href='#'>find me</a>)</small>
             </h4>
             <p>
-              <input class='form-control' id='search_address' placeholder='Enter an address or an intersection' type='text' />
-            </p>
+               <input class='form-control' id='search_address' placeholder='Enter an address or an intersection' type='text'/>
+           </p> 
             <p>
               <label>
                 within
@@ -64,31 +46,13 @@
                   <option value='805'>1/2 mile</option>
                   <option value='1610'>1 mile</option>
                   <option value='3220'>2 miles</option>
+                  <option value='80500'>50 miles</option>
                 </select>
               </label>
             </p>
 
             <br />
-            <h4>Custom filters and views</h4>
-            <p>Take a look at the <a href='https://github.com/derekeder/FusionTable-Map-Template/wiki/Filter-examples'>wiki</a> to see how to add your own custom filters and views like:</p>
-            <div class='row'>
-              <div class='col-md-6'>
-                <ul>
-                  <li><a href='https://github.com/derekeder/FusionTable-Map-Template/wiki/Filter-examples#wiki-checkboxes'>Checkboxes</a></li>
-                  <li><a href='https://github.com/derekeder/FusionTable-Map-Template/wiki/Filter-examples#wiki-radiobuttons'>Radio buttons</a></li>
-                  <li><a href='https://github.com/derekeder/FusionTable-Map-Template/wiki/Filter-examples#wiki-drop-down-lists'>Drop down lists</a></li>
-                  <li><a href='https://github.com/derekeder/FusionTable-Map-Template/wiki/Filter-examples#wiki-textsearches'>Text searches</a></li>
-                </ul>
-              </div>
-              <div class='col-md-6'>
-                <ul>
-                  <li><a href='https://github.com/derekeder/FusionTable-Map-Template/wiki/Filter-examples#wiki-sliders'>Sliders</a></li>
-                  <li><a href='https://github.com/derekeder/FusionTable-Map-Template/wiki/Filter-examples#wiki-date-sliders'>Date sliders</a></li>
-                  <li><a href='https://github.com/derekeder/FusionTable-Map-Template/wiki/List-search-results'>Results lists</a></li>
-                </ul>
-              </div>
-            </div>
-            <br />
+
             <a class='btn btn-primary' id='search' href='#'>
               <i class='glyphicon glyphicon-search'></i>
               Search
@@ -98,10 +62,6 @@
               Reset
             </a>
           </div>
-          <div class='alert alert-info' id='result_box' ><strong id='result_count'></strong></div>
-        </div>
-        
-      </div>
     </div>
 
     <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
@@ -114,13 +74,15 @@
       //<![CDATA[
         $(window).resize(function () {
           var h = $(window).height(),
-            offsetTop = 105; // Calculate the top offset
+            offsetTop = 10; // Calculate the top offset
         
           $('#map_canvas').css('height', (h - offsetTop));
+          $('#results_canvas').css('height', (h - offsetTop));
         }).resize();
         
         $(function() {
           MapsLib.initialize();
+
           $("#search_address").geocomplete();
 
           $(':checkbox').click(function(){
