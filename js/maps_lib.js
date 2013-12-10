@@ -150,7 +150,34 @@ var MapsLib = {
     });
     MapsLib.searchrecords.setMap(map);
     MapsLib.getCount(whereClause);
-    google.maps.event.addListener(MapsLib.searchrecords, 'click', function(e) {
+    MapsLib.getList(whereClause);
+    google.maps.event.addListener(MapsLib.searchrecords, 'click', openWindow(e));// function(e) {
+    //         // Change the content of the InfoWindow
+    //       e.infoWindowHtml = "<b>Facility Type: </b>" + e.row['Facility_Type'].value + "<br>";
+    //       if (e.row['Rail_URL'].value != '' ) {
+    //         e.infoWindowHtml += "<b>Servicing Railroad: </b>" + e.row['Rail_URL'].value + "<br>";
+    //       }
+    //       e.infoWindowHtml += "<b>Address: </b>" + e.row['Address1'].value + "<br>";
+    //       if (e.row['Address2'].value != '' ) {
+    //         e.infoWindowHtml += e.row['Address2'].value + "<br>";
+    //       }
+    //       e.infoWindowHtml += "<b>City: </b>" + e.row['City'].value + "<br>";
+    //       e.infoWindowHtml += "<b>State or Province: </b>" + e.row['State_Province'].value + "<br>";
+    //       e.infoWindowHtml += "<b>Postal Code: </b>" + e.row['Postal_Code'].value + "<br>";
+    //       e.infoWindowHtml += "<b>Country: </b>" + e.row['Country'].value + "<br>";
+    //       e.infoWindowHtml += "<b>Telephone: </b>" + e.row['Telephone'].value + "<br>";
+    //       if (e.row['Email'].value != '' ) {
+    //         e.infoWindowHtml += "<b>Email: </b>" + e.row['Email'].value + "<br>";
+    //       }
+    //       if (e.row['Web_URL'].value != '' ) {
+    //         e.infoWindowHtml += "<b>Website: </b>" + e.row['Web_URL'].value + "<br>";
+    //       }
+
+    // });
+    
+  },
+
+  openWindow: function(e) {
             // Change the content of the InfoWindow
           e.infoWindowHtml = "<b>Facility Type: </b>" + e.row['Facility_Type'].value + "<br>";
           if (e.row['Rail_URL'].value != '' ) {
@@ -172,8 +199,6 @@ var MapsLib = {
             e.infoWindowHtml += "<b>Website: </b>" + e.row['Web_URL'].value + "<br>";
           }
 
-    });
-    MapsLib.getList(whereClause);
   },
 
   clearSearch: function() {
@@ -335,7 +360,7 @@ displayList: function(json) {
   // This also applies to the convertToPlainString function above
   
   // Open the info window at the clicked location
-  // windowControl: function(e, infoWindow, map) {
+  // openWindow: function(e, infoWindow, map) {
   //      infoWindow.setOptions({
   //         content: e.infoWindowHtml,
   //         position: e.latLng,
