@@ -21,7 +21,8 @@ var MapsLib = {
 
   //the encrypted Table ID of your Fusion Table (found under File => About)
   //NOTE: numeric IDs will be depricated soon
-  fusionTableId:      "1iK_5ekxipPJyxyLreYX1YewUU4WE9PnZBT6jXzQ",
+  //fusionTableId:      "1iK_5ekxipPJyxyLreYX1YewUU4WE9PnZBT6jXzQ",
+  fusionTableId:      "1vUjhUbwrPWEX-PaBHDWK0QorZMYBPK9CAEG4lh0",
 
   //*New Fusion Tables Requirement* API key. found at https://code.google.com/apis/console/
   //*Important* this key is for demonstration purposes. please register your own.
@@ -30,7 +31,8 @@ var MapsLib = {
   //name of the location column in your Fusion Table.
   //NOTE: if your location column name has spaces in it, surround it with single quotes
   //example: locationColumn:     "'my location'",
-  locationColumn:     "Geocode",
+  locationColumn:     "latlong",
+  //locationColumn:     "Geocode",
 
   map_centroid:       new google.maps.LatLng(39.50, -98.35), //center that your map defaults to
   locationScope:      "",      //geographical area appended to all address searches
@@ -61,7 +63,8 @@ var MapsLib = {
     google.maps.event.addDomListener(window, 'resize', function() {
         map.setCenter(MapsLib.map_centroid);
     });
-
+    
+    MapsLib.infoWindow = new google.maps.InfoWindow();
     MapsLib.searchrecords = null;
 
     //reset filters
@@ -146,12 +149,17 @@ var MapsLib = {
         where:  whereClause
       },
       styleId: 2,
-      templateId: 2
+      templateId: 2,
+      suppressInfoWindows: true
     });
+    //MapsLib.mytest= MapsLib.searchrecords[1].row['Facility_Type'].value;
     MapsLib.searchrecords.setMap(map);
     MapsLib.getCount(whereClause);
     MapsLib.getList(whereClause);
-    google.maps.event.addListener(MapsLib.searchrecords, 'click', openWindow(e));// function(e) {
+    google.maps.event.addListener(MapsLib.searchrecords, 'click', function(e) {
+          MapsLib.windowControl(e, MapsLib.infoWindow, map);
+        });
+    //google.maps.event.addListener(MapsLib.searchrecords, 'click', openWindow(e));// function(e) {
     //         // Change the content of the InfoWindow
     //       e.infoWindowHtml = "<b>Facility Type: </b>" + e.row['Facility_Type'].value + "<br>";
     //       if (e.row['Rail_URL'].value != '' ) {
@@ -175,6 +183,17 @@ var MapsLib = {
 
     // });
     
+  },
+
+  // Open the info window at the clicked location
+  windowControl: function(e, infoWindow, map) {
+      //e.infoWindowHtml = "<b>Facility Type: </b>" + e.row['Geocode'].value + "<br>";
+      infoWindow.setOptions({
+      content: e.infoWindowHtml,
+      position: e.latLng,
+      pixelOffset: e.pixelOffset
+       });
+      infoWindow.open(map);
   },
 
   openWindow: function(e) {
@@ -316,7 +335,7 @@ displayList: function(json) {
   }
   else {
     template = "<table class='table table-bordered table-hover table-condensed'>";
-    template = template.concat("<thead><tr><th>Type</th><th>Name</th><th>City</th><th>State</th><th>Country</th></tr></thead>");
+    template = template.concat("<thead><tr><th>Type</th><th>Name</th><th>City</th><th>State</th><th>Country</th><th>ROWID</th></tr></thead>");
     template = template.concat("<tbody>");
     for (var row in data) {
        template = template.concat("<tr><td>" + data[row][0] + "</td><td>" + data[row][1] + "</td><td>" + data[row][2] + "</td><td>" + data[row][3] + "</td><td>" + data[row][4] + "</td></tr>");
