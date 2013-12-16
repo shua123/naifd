@@ -39,7 +39,7 @@ var MapsLib = {
   recordName:         "result",       //for showing number of results
   recordNamePlural:   "results",
 
-  searchRadius:       805,            //in meters ~ 1/2 mile
+  searchRadius:       40250,            //in meters
   defaultZoom:        3,             //zoom level when map is loaded (bigger is more zoomed in)
   addrMarkerImage:    'images/blue-pushpin.png',
   currentPinpoint:    null,
@@ -66,6 +66,7 @@ var MapsLib = {
     
     MapsLib.infoWindow = new google.maps.InfoWindow();
     MapsLib.searchrecords = null;
+    MapsLib.data = null;
 
     //reset filters
     $("#search_address").val(MapsLib.convertToPlainString($.address.parameter('address')));
@@ -187,7 +188,27 @@ var MapsLib = {
 
   // Open the info window at the clicked location
   windowControl: function(e, infoWindow, map) {
-      //e.infoWindowHtml = "<b>Facility Type: </b>" + e.row['Geocode'].value + "<br>";
+      e.infoWindowHtml = "<b>" + e.row['Facility_Name'].value + "</b><br>";
+      e.infoWindowHtml += "<b>Facility Type: </b>" + e.row['Facility_Type'].value + "<br>";
+      if (e.row['Rail_URL'].value != '' ) {
+        e.infoWindowHtml += "<b>Servicing Railroad: </b>" + e.row['Rail_URL'].value + "<br>";
+      }
+      e.infoWindowHtml += "<b>Address: </b>" + e.row['Address1'].value + "<br>";
+      if (e.row['Address2'].value != '' ) {
+        e.infoWindowHtml += e.row['Address2'].value + "<br>";
+      }
+      e.infoWindowHtml += "<b>City: </b>" + e.row['City'].value + "<br>";
+      e.infoWindowHtml += "<b>State or Province: </b>" + e.row['State_Province'].value + "<br>";
+      e.infoWindowHtml += "<b>Postal Code: </b>" + e.row['Postal_Code'].value + "<br>";
+      e.infoWindowHtml += "<b>Country: </b>" + e.row['Country'].value + "<br>";
+      e.infoWindowHtml += "<b>Telephone: </b>" + e.row['Telephone'].value + "<br>";
+      if (e.row['Email'].value != '' ) {
+        e.infoWindowHtml += "<b>Email: </b>" + e.row['Email'].value + "<br>";
+      }
+      if (e.row['Web_URL'].value != '' ) {
+        e.infoWindowHtml += "<b>Website: </b>" + e.row['Web_URL'].value + "<br>";
+      }
+
       infoWindow.setOptions({
       content: e.infoWindowHtml,
       position: e.latLng,
@@ -196,27 +217,41 @@ var MapsLib = {
       infoWindow.open(map);
   },
 
-  openWindow: function(e) {
+  openWindowTable: function(row) {
             // Change the content of the InfoWindow
-          e.infoWindowHtml = "<b>Facility Type: </b>" + e.row['Facility_Type'].value + "<br>";
-          if (e.row['Rail_URL'].value != '' ) {
-            e.infoWindowHtml += "<b>Servicing Railroad: </b>" + e.row['Rail_URL'].value + "<br>";
-          }
-          e.infoWindowHtml += "<b>Address: </b>" + e.row['Address1'].value + "<br>";
-          if (e.row['Address2'].value != '' ) {
-            e.infoWindowHtml += e.row['Address2'].value + "<br>";
-          }
-          e.infoWindowHtml += "<b>City: </b>" + e.row['City'].value + "<br>";
-          e.infoWindowHtml += "<b>State or Province: </b>" + e.row['State_Province'].value + "<br>";
-          e.infoWindowHtml += "<b>Postal Code: </b>" + e.row['Postal_Code'].value + "<br>";
-          e.infoWindowHtml += "<b>Country: </b>" + e.row['Country'].value + "<br>";
-          e.infoWindowHtml += "<b>Telephone: </b>" + e.row['Telephone'].value + "<br>";
-          if (e.row['Email'].value != '' ) {
-            e.infoWindowHtml += "<b>Email: </b>" + e.row['Email'].value + "<br>";
-          }
-          if (e.row['Web_URL'].value != '' ) {
-            e.infoWindowHtml += "<b>Website: </b>" + e.row['Web_URL'].value + "<br>";
-          }
+
+          MapsLib.infoWindow.close(map);
+          thisCoordinate = MapsLib.data[row][6].split(",");
+          thisLocation = new google.maps.LatLng(thisCoordinate[0],thisCoordinate[1]);
+          thisContent = "<b>" + MapsLib.data[row][1] + "</b><br>";
+          thisContent += "<b>Facility Type: </b>" + MapsLib.data[row][0] + "<br>";
+          MapsLib.infoWindow.setOptions({
+            content: thisContent,
+            position: thisLocation
+          });
+          map.setCenter(thisLocation);
+          map.setZoom(10);
+          MapsLib.infoWindow.open(map);
+          //MapsLib.infoWindow
+          // e.infoWindowHtml = "<b>Facility Type: </b>" + e.row['Facility_Type'].value + "<br>";
+          // if (e.row['Rail_URL'].value != '' ) {
+          //   e.infoWindowHtml += "<b>Servicing Railroad: </b>" + e.row['Rail_URL'].value + "<br>";
+          // }
+          // e.infoWindowHtml += "<b>Address: </b>" + e.row['Address1'].value + "<br>";
+          // if (e.row['Address2'].value != '' ) {
+          //   e.infoWindowHtml += e.row['Address2'].value + "<br>";
+          // }
+          // e.infoWindowHtml += "<b>City: </b>" + e.row['City'].value + "<br>";
+          // e.infoWindowHtml += "<b>State or Province: </b>" + e.row['State_Province'].value + "<br>";
+          // e.infoWindowHtml += "<b>Postal Code: </b>" + e.row['Postal_Code'].value + "<br>";
+          // e.infoWindowHtml += "<b>Country: </b>" + e.row['Country'].value + "<br>";
+          // e.infoWindowHtml += "<b>Telephone: </b>" + e.row['Telephone'].value + "<br>";
+          // if (e.row['Email'].value != '' ) {
+          //   e.infoWindowHtml += "<b>Email: </b>" + e.row['Email'].value + "<br>";
+          // }
+          // if (e.row['Web_URL'].value != '' ) {
+          //   e.infoWindowHtml += "<b>Website: </b>" + e.row['Web_URL'].value + "<br>";
+          // }
 
   },
 
@@ -317,28 +352,31 @@ var MapsLib = {
   },
 
   getList: function(whereClause) {
-  var selectColumns = "Facility_Type, Facility_Name, City, State_Province, Country";
+  var selectColumns = "Facility_Type, Facility_Name, City, State_Province, Country, ROWID, latlong";
   MapsLib.query(selectColumns, whereClause, "MapsLib.displayList");
 },
 
 displayList: function(json) {
   MapsLib.handleError(json);
-  var data = json["rows"];
+  //var data = json["rows"];
+  MapsLib.data =json["rows"];
   var template = "";
 
   var results = $("#results_list");
   results.hide().empty(); //hide the existing list and empty it out first
 
-  if (data == null) {
+  if (MapsLib.data == null) {
     //clear results list
     results.append("<li><span class='lead'>No results found</span></li>");
   }
   else {
     template = "<table class='table table-bordered table-hover table-condensed'>";
-    template = template.concat("<thead><tr><th>Type</th><th>Name</th><th>City</th><th>State</th><th>Country</th><th>ROWID</th></tr></thead>");
+    template = template.concat("<thead><tr><th>Type</th><th>Name</th><th>City</th><th>State</th><th>Country</th></tr></thead>");
+
     template = template.concat("<tbody>");
-    for (var row in data) {
-       template = template.concat("<tr><td>" + data[row][0] + "</td><td>" + data[row][1] + "</td><td>" + data[row][2] + "</td><td>" + data[row][3] + "</td><td>" + data[row][4] + "</td></tr>");
+    for (var row in MapsLib.data) {
+       template = template.concat("<tr onclick='javascript:MapsLib.openWindowTable(" + row + "); '><td>" + MapsLib.data[row][0] + "</td><td>" + MapsLib.data[row][1] + "</td><td>" + MapsLib.data[row][2] + "</td><td>" + MapsLib.data[row][3] + "</td><td>" + MapsLib.data[row][4] + "</td></tr>");
+      
        // results.append("<td>" + data[row][1] + "</td>");
        // results.append("<td>" + data[row][2] + "</td>");
        // results.append("<td>" + data[row][3] + "</td>");

@@ -16,52 +16,50 @@
     <![endif]-->
   </head>
   <body>
-    <div>
-      <div class='span9'>
-          <noscript>
-            <div class='alert alert-info'>
-              <h4>Your JavaScript is disabled</h4>
-              <p>Please enable JavaScript to view the map.</p>
-            </div>
-          </noscript>
-          <div id='map_canvas'></div>
-      </div>
-      <div id='results_canvas' class='span2' >
-        <div id='results_list' ></div>
+    <div class="container-fluid">
+      <div class='row-fluid'>
+        <div class='span7'>
+            <noscript>
+              <div class='alert alert-info'>
+                <h4>Your JavaScript is disabled</h4>
+                <p>Please enable JavaScript to view the map.</p>
+              </div>
+            </noscript>
+            <div id='map_canvas'></div>
 
-        
-      </div> 
-      <div class='span12'>
-            <h4>
-              Address <small>(<a id='find_me' href='#'>find me</a>)</small>
-            </h4>
-            <p>
-               <input class='form-control' id='search_address' placeholder='Enter an address or an intersection' type='text'/>
-           </p> 
-            <p>
-              <label>
-                within
-                <select id='search_radius'>
-                  <option value='400'>2 blocks</option>
-                  <option value='805'>1/2 mile</option>
-                  <option value='1610'>1 mile</option>
-                  <option value='3220'>2 miles</option>
-                  <option value='80500'>50 miles</option>
-                </select>
-              </label>
-            </p>
-
-            <br />
-
-            <a class='btn btn-primary' id='search' href='#'>
-              <i class='glyphicon glyphicon-search'></i>
-              Search
-            </a>
-            <a class='btn btn-default' id='reset' href='#'>
-              <i class='glyphicon glyphicon-repeat'></i>
-              Reset
-            </a>
+        </div>
+        <div class='span5'>
+          <div class='row-fluid'>
+            <div id='results_list' class='span12'></div>   
           </div>
+        </div>
+        <div class='row-fluid'>
+            <div class="span12">
+              <p> Address <small>(<a id='find_me' href='#'>find me</a>)</small>
+                 <input class='form-control' id='search_address' placeholder='Enter an address or an intersection' type='text'/>
+                  within
+                  <select id='search_radius'>
+                    <option value='3220'>2 miles</option>
+                    <option value='8050'>5 miles</option>
+                    <option value='16100'>10 mile</option>
+                    <option value='40250'>25 miles</option>
+                    <option value='80500'>50 miles</option>
+                    <option value='161000'>100 miles</option>
+                  </select>
+
+              <a class='btn btn-primary' id='search' href='#'>
+                  <i class='glyphicon glyphicon-search'></i>
+                  Search
+                </a>
+                <a class='btn btn-default' id='reset' href='#'>
+                  <i class='glyphicon glyphicon-repeat'></i>
+                  Reset
+                </a>
+              </p>
+            </div>
+
+          </div>
+      </div>
     </div>
 
     <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
@@ -74,10 +72,11 @@
       //<![CDATA[
         $(window).resize(function () {
           var h = $(window).height(),
-            offsetTop = 10; // Calculate the top offset
+            offsetTop = 45; // Calculate the top offset
         
           $('#map_canvas').css('height', (h - offsetTop));
           $('#results_canvas').css('height', (h - offsetTop));
+          $('#results_list').css('height', (h - offsetTop));
         }).resize();
         
         $(function() {

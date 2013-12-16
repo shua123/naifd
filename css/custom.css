@@ -5,6 +5,14 @@ a:hover { color: #4B58A6; }
   max-width: none;
 }
 
+
+#results_list {
+  overflow-y:auto;
+  height: 100%;
+  
+}
+
+
 .filter-box { 
   height: 15px; 
   width: 15px;  
@@ -25,9 +33,5 @@ a:hover { color: #4B58A6; }
 .filter-purple { background-color: #7C54FB; }
 .filter-red { background-color: #FB6353; }
 
-.results_canvas {
-  overflow: scroll;
-
-}
 
 canvas {-ms-touch-action: double-tap-zoom;}
