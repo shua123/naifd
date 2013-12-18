@@ -219,12 +219,32 @@ var MapsLib = {
 
   openWindowTable: function(row) {
             // Change the content of the InfoWindow
+          //"Facility_Type(0), Railroad(1), Rail_URL(2), Facility_Name(3), Address1(4), Address2(5), City(6), 
+          //State_Province(7), Postal_Code(8), Country(9), latlong(10), Telephone(11), Email(12), Web_URL(13)"
 
           MapsLib.infoWindow.close(map);
-          thisCoordinate = MapsLib.data[row][6].split(",");
+          thisCoordinate = MapsLib.data[row][10].split(",");
           thisLocation = new google.maps.LatLng(thisCoordinate[0],thisCoordinate[1]);
-          thisContent = "<b>" + MapsLib.data[row][1] + "</b><br>";
+          thisContent = "<b>" + MapsLib.data[row][3] + "</b><br>";
           thisContent += "<b>Facility Type: </b>" + MapsLib.data[row][0] + "<br>";
+          if (MapsLib.data[row][2] != '' ) {
+            thisContent += "<b>Servicing Railroad: </b>" + MapsLib.data[row][2] + "<br>";
+          }
+          thisContent += "<b>Address: </b>" + MapsLib.data[row][4] + "<br>";
+          if (MapsLib.data[row][5] != '' ) {
+            thisContent += MapsLib.data[row][5] + "<br>";
+          }
+          thisContent += "<b>City: </b>" + MapsLib.data[row][6] + "<br>";
+          thisContent += "<b>State or Province: </b>" + MapsLib.data[row][7] + "<br>";
+          thisContent += "<b>Postal Code: </b>" + MapsLib.data[row][8] + "<br>";
+          thisContent += "<b>Country: </b>" + MapsLib.data[row][9] + "<br>";
+          thisContent += "<b>Telephone: </b>" + MapsLib.data[row][11] + "<br>";
+          if (MapsLib.data[row][12] != '' ) {
+            thisContent += "<b>Email: </b>" + MapsLib.data[row][12] + "<br>";
+          }
+          if (MapsLib.data[row][13] != '' ) {
+            thisContent += "<b>Website: </b>" + MapsLib.data[row][13] + "<br>";
+          }
           MapsLib.infoWindow.setOptions({
             content: thisContent,
             position: thisLocation
@@ -352,7 +372,7 @@ var MapsLib = {
   },
 
   getList: function(whereClause) {
-  var selectColumns = "Facility_Type, Facility_Name, City, State_Province, Country, ROWID, latlong";
+  var selectColumns = "Facility_Type, Railroad, Rail_URL, Facility_Name, Address1, Address2, City, State_Province, Postal_Code, Country, latlong, Telephone, Email, Web_URL";
   MapsLib.query(selectColumns, whereClause, "MapsLib.displayList");
 },
 
@@ -375,7 +395,7 @@ displayList: function(json) {
 
     template = template.concat("<tbody>");
     for (var row in MapsLib.data) {
-       template = template.concat("<tr onclick='javascript:MapsLib.openWindowTable(" + row + "); '><td>" + MapsLib.data[row][0] + "</td><td>" + MapsLib.data[row][1] + "</td><td>" + MapsLib.data[row][2] + "</td><td>" + MapsLib.data[row][3] + "</td><td>" + MapsLib.data[row][4] + "</td></tr>");
+       template = template.concat("<tr onclick='javascript:MapsLib.openWindowTable(" + row + "); '><td>" + MapsLib.data[row][0] + "</td><td>" + MapsLib.data[row][3] + "</td><td>" + MapsLib.data[row][6] + "</td><td>" + MapsLib.data[row][7] + "</td><td>" + MapsLib.data[row][9] + "</td></tr>");
       
        // results.append("<td>" + data[row][1] + "</td>");
        // results.append("<td>" + data[row][2] + "</td>");
