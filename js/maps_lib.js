@@ -617,6 +617,17 @@ displayList: function(json) {
       $("#input-city").hide();
       $("#input-facilitytype").hide();
     }
+    else if (option == "5"){
+      $("#stateDD").val('');
+      $("#cityDD").val('');
+      $("#facilitytypeDD").val('');
+      $("#search_name").val('');
+      $("#input-name").hide();
+      $("#input-address").show();
+      $("#input-state").hide();
+      $("#input-city").hide();
+      $("#input-facilitytype").hide();
+    }
   }
 
 
