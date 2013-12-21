@@ -83,9 +83,10 @@ var MapsLib = {
     //-----custom initializers-------
     //$("#stateDD option:first").attr("selected", true);
 
-    MapsLib.queryDD("State_Province", "MapsLib.StateDropdown");
-    $("#stateDD").val('');
-    //MapsLib.testValue = "0";
+    
+    
+    $("#SearchType").val(0);
+    MapsLib.SearchTypeChange(0);
 
     
 
@@ -103,14 +104,24 @@ var MapsLib = {
     MapsLib.clearSearch();
     MapsLib.address = $("#search_address").val();
     MapsLib.searchRadius = $("#search_radius").val();
+    MapsLib.infoWindow.close(map);
 
     var whereClause = MapsLib.locationColumn + " not equal to ''";
 
     //-----custom filters-------
-    statesearch = $("#stateDD").val();
+    //statesearch = $("#stateDD").val();
 
     if ( $("#stateDD").val() != ''){
       whereClause += " AND 'State_Province' = '" + $("#stateDD").val() + "'";
+    }
+    if ( $("#cityDD").val() != ''){
+      whereClause += " AND 'City' = '" + $("#cityDD").val() + "'";;
+    }
+    if ( $("#facilitytypeDD").val() != ''){
+      whereClause += " AND 'Facility_Type' = '" + $("#facilitytypeDD").val() + "'";
+    }
+    if ($("#search_name").val() != ''){
+      whereClause += " AND 'Facility_Name' CONTAINS IGNORING CASE '" + $("#search_name").val() + "'";
     }
 
     //-------end of custom filters--------
@@ -125,6 +136,7 @@ var MapsLib = {
 
           $.address.parameter('address', encodeURIComponent(MapsLib.address));
           $.address.parameter('radius', encodeURIComponent(MapsLib.searchRadius));
+          //$.address.parameter('myparam', encodeURIComponent("Hello"));
           map.setCenter(MapsLib.currentPinpoint);
           map.setZoom(10);
 
@@ -298,6 +310,9 @@ var MapsLib = {
       MapsLib.addrMarker.setMap(null);
     if (MapsLib.searchRadiusCircle != null)
       MapsLib.searchRadiusCircle.setMap(null);
+    MapsLib.infoWindow.close(map);
+    map.setCenter(MapsLib.map_centroid);
+    map.setZoom(MapsLib.defaultZoom);
   },
 
   findMe: function() {
@@ -422,12 +437,16 @@ displayList: function(json) {
     template = template.concat("</tbody></table>");
     results.append(template);
     //If MapsLib.currentPinpoint is null, use first result record location
-    if (MapsLib.address == '' && MapsLib.counter > 1){
-      thisCoordinate = MapsLib.data[0][10].split(",");
-      thisLocation = new google.maps.LatLng(thisCoordinate[0],thisCoordinate[1]);
-      map.setCenter(thisLocation);
-      map.setZoom(5);
+    if (( ($("#stateDD").val() != '') || ($("#cityDD").val() != '') ) && MapsLib.counter > 1){
+        var thisCoordinate = MapsLib.data[0][10].split(",");
+        centerLat = thisCoordinate[0];
+        centerLong = thisCoordinate[1];
+        newcenter = new google.maps.LatLng(centerLat,centerLong);
+        map.setCenter(newcenter);
     }
+
+    if ($("#stateDD").val() != ''){map.setZoom(5);}
+    else if ($("#cityDD").val() != ''){map.setZoom(9);}
 
   }
   results.fadeIn();
@@ -479,28 +498,125 @@ displayList: function(json) {
   StateDropdown: function(json){
     MapsLib.handleError(json);
     var statedata = json["rows"];
-
     var stateDD = "<select id= 'stateDD' onchange='MapsLib.doSearch()' class=''>";
-    stateDD += '<option value="">-- Select State or Province --</option>';
+    stateDD += '<option value="">-- Select State / Province --</option>';
     if (statedata == null) { 
       stateDD += "<option value ='Not Good'>Problem retrieving data. Please reload.</option>";
     }
     for (var row in statedata) {
       stateDD += "<option value='" + statedata[row][0] + "'>" + statedata[row][0] + "</option>";
-      //stateDD += "test";
     }
     stateDD += "</select>";
-
-    //var results = $("#input-state");
-    //results.hide().empty(); //hide the existing list and empty it out first
-    //results.append(stateDD);
     $('#input-state').html(stateDD);
-            //  MapsLib.submitSearch(whereClause, map, MapsLib.currentPinpoint);
+  },
 
+  CityDropdown: function(json){
+    MapsLib.handleError(json);
+    var citydata = json["rows"];
+    var cityDD = "<select id= 'cityDD' onchange='MapsLib.doSearch()' class=''>";
+    cityDD += '<option value="">-- Select City --</option>';
+    if (citydata == null) { 
+      cityDD += "<option value ='Not Good'>Problem retrieving data. Please reload.</option>";
+    }
+    for (var row in citydata) {
+      cityDD += "<option value='" + citydata[row][0] + "'>" + citydata[row][0] + "</option>";
+    }
+    cityDD += "</select>";
+    $('#input-city').html(cityDD);
+  },
 
+  FacilityTypeDropdown: function(json){
+    MapsLib.handleError(json);
+    var factypedata = json["rows"];
+    var facilitytypeDD = "<select id= 'facilitytypeDD' onchange='MapsLib.doSearch()' class=''>";
+    facilitytypeDD += '<option value="">-- Select a Facility Type --</option>';
+    if (factypedata == null) { 
+      facilitytypeDD += "<option value ='Not Good'>Problem retrieving data. Please reload.</option>";
+    }
+    for (var row in factypedata) {
+      facilitytypeDD += "<option value='" + factypedata[row][0] + "'>" + factypedata[row][0] + "</option>";
+    }
+    facilitytypeDD += "</select>";
+    $('#input-facilitytype').html(facilitytypeDD);
+  },
+
+  GetNameList: function(json){
+    MapsLib.handleError(json);
+    var namedata = json["rows"];
+    // Create the list of results for display of autocomplete.
+    var namelist = [];
+    for (var row in namedata) {
+      namelist.push(namedata[row][0]);
+    }
+    // Use the results to create the autocomplete options.
+    $('#search_name').autocomplete({
+      source: namelist,
+      minLength: 2,
+      position: { my: "left bottom", at: "left top", collision: "flip" }
+    });
+  },
+
+  SearchTypeChange: function(option){
+    if (option == "0"){
+      $("#stateDD").val('');
+      $("#cityDD").val('');
+      $("#search_name").val('');
+      $("#facilitytypeDD").val('');
+      $("#input-address").hide();
+      $("#input-state").hide();
+      $("#input-city").hide();
+      $("#input-facilitytype").hide();
+      $("#input-name").hide();
+    }
+    else if (option == "1"){
+      $("#cityDD").val('');
+      $("#facilitytypeDD").val('');
+      $("#search_name").val('');
+
+      MapsLib.queryDD("State_Province", "MapsLib.StateDropdown");
+
+      $("#input-state").show();
+      $("#input-address").hide();
+      $("#input-city").hide();
+      $("#input-facilitytype").hide();
+      $("#input-name").hide();
+    }
+    else if (option == "2"){
+      $("#stateDD").val('');
+      $("#facilitytypeDD").val('');
+      $("#search_name").val('');
+      MapsLib.queryDD("City", "MapsLib.CityDropdown");
+
+      $("#input-city").show();
+      $("#input-address").hide();
+      $("#input-state").hide();
+      $("#input-facilitytype").hide();
+      $("#input-name").hide();
+    }
+    else if (option == "3"){
+      $("#stateDD").val('');
+      $("#cityDD").val('');
+      $("#search_name").val('');
+      MapsLib.queryDD("Facility_Type", "MapsLib.FacilityTypeDropdown");
+
+      $("#input-facilitytype").show();
+      $("#input-address").hide();
+      $("#input-state").hide();
+      $("#input-city").hide();
+      $("#input-name").hide();
+    }
+    else if (option == "4"){
+      $("#stateDD").val('');
+      $("#cityDD").val('');
+      $("#facilitytypeDD").val('');
+      MapsLib.queryDD("Facility_Name", "MapsLib.GetNameList");
+      $("#input-name").show();
+      $("#input-address").hide();
+      $("#input-state").hide();
+      $("#input-city").hide();
+      $("#input-facilitytype").hide();
+    }
   }
-
-  //DropDownChange: function(
 
 
 
