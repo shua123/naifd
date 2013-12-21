@@ -121,7 +121,8 @@ var MapsLib = {
       whereClause += " AND 'Facility_Type' = '" + $("#facilitytypeDD").val() + "'";
     }
     if ($("#search_name").val() != ''){
-      whereClause += " AND 'Facility_Name' CONTAINS IGNORING CASE '" + $("#search_name").val() + "'";
+      search_name = $("#search_name").val().replace("'", "\\'");
+      whereClause += " AND 'Facility_Name' CONTAINS IGNORING CASE '" + search_name + "'";
     }
 
     //-------end of custom filters--------
