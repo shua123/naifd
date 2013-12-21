@@ -37,7 +37,7 @@
         </div>
         <div class='row-fluid'>
             <div class="span12">
-              <div class="span3">View By: 
+              <div class="span3">Search By: 
                 <select class="cat-code" id="SearchType" onChange="MapsLib.SearchTypeChange(value)">
                   <option value='0'>--Search Type--</option>
                   <option value="1">State / Province</option>
@@ -45,6 +45,7 @@
                   <option value="3">Facility Type</option>
                   <option value="4">Facility Name</option>
                   <option value="5">Address</option>
+                  <option value="6">Railroad</option>
                 </select>
               </div>
               <div class="span1">
@@ -70,6 +71,12 @@
                 <select id="facilitytypeDD" onChange="">
                   <option value="">-- Select a Facility Type --</option>
                   <option value="">Loading Facility Types...</option>
+                </select>
+              </div>
+              <div id='input-railroad' class="span2" style="display: none;">
+                <select id="railroadDD" onChange="">
+                  <option value="">-- Select a Railroad --</option>
+                  <option value="">Loading Roalroads...</option>
                 </select>
               </div>
               <div id='input-name' class="span7" style="display:none;">
