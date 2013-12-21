@@ -12,6 +12,14 @@ a:hover { color: #4B58A6; }
   
 }
 
+#legend {
+  background: white;
+  padding: 15px;
+  position: absolute;
+/*  bottom:15%;*/
+  left:10;
+  }
+
 
 .filter-box { 
   height: 15px; 

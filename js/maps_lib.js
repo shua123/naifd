@@ -34,7 +34,7 @@ var MapsLib = {
   locationColumn:     "latlong",
   //locationColumn:     "Geocode",
 
-  map_centroid:       new google.maps.LatLng(39.50, -98.35), //center that your map defaults to
+  map_centroid:       new google.maps.LatLng(41.00, -114), //center that your map defaults to
   locationScope:      "",      //geographical area appended to all address searches
   recordName:         "result",       //for showing number of results
   recordNamePlural:   "results",
@@ -53,7 +53,15 @@ var MapsLib = {
     var myOptions = {
       zoom: MapsLib.defaultZoom,
       center: MapsLib.map_centroid,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      styles: [
+        {
+          stylers: [
+            { saturation: -70 },
+            { lightness: 20 }
+          ]
+        }
+      ]
     };
     map = new google.maps.Map($("#map_canvas")[0],myOptions);
 
@@ -65,6 +73,8 @@ var MapsLib = {
     google.maps.event.addDomListener(window, 'resize', function() {
         map.setCenter(MapsLib.map_centroid);
     });
+
+    
     
     MapsLib.infoWindow = new google.maps.InfoWindow();
     MapsLib.searchrecords = null;
@@ -83,7 +93,8 @@ var MapsLib = {
     //-----custom initializers-------
     //$("#stateDD option:first").attr("selected", true);
 
-    
+    // map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(
+    //     document.getElementById('legend'));
     
     $("#SearchType").val(0);
     MapsLib.SearchTypeChange(0);
