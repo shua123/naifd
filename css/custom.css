@@ -5,6 +5,12 @@ a:hover { color: #4B58A6; }
   max-width: none;
 }
 
+#infowindow {
+  line-height:1.35;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
 
 #results_list {
   overflow-y:auto;
