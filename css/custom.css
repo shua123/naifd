@@ -5,7 +5,7 @@ a:hover { color: #4B58A6; }
   max-width: none;
 }
 
-#infowindow {
+#map_canvas {
   line-height:1.35;
   overflow:hidden;
   white-space:nowrap;
