@@ -11,11 +11,13 @@ a:hover { color: #4B58A6; }
   white-space:nowrap;
 }
 
-
 #results_list {
   overflow-y:auto;
   height: 100%;
-  
+}
+
+#results-table {
+  font-size: 12px;
 }
 
 #legend {

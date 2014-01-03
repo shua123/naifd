@@ -276,26 +276,6 @@ var MapsLib = {
           map.setCenter(thisLocation);
           map.setZoom(10);
           MapsLib.infoWindow.open(map);
-          //MapsLib.infoWindow
-          // e.infoWindowHtml = "<b>Facility Type: </b>" + e.row['Facility_Type'].value + "<br>";
-          // if (e.row['Rail_URL'].value != '' ) {
-          //   e.infoWindowHtml += "<b>Servicing Railroad: </b>" + e.row['Rail_URL'].value + "<br>";
-          // }
-          // e.infoWindowHtml += "<b>Address: </b>" + e.row['Address1'].value + "<br>";
-          // if (e.row['Address2'].value != '' ) {
-          //   e.infoWindowHtml += e.row['Address2'].value + "<br>";
-          // }
-          // e.infoWindowHtml += "<b>City: </b>" + e.row['City'].value + "<br>";
-          // e.infoWindowHtml += "<b>State or Province: </b>" + e.row['State_Province'].value + "<br>";
-          // e.infoWindowHtml += "<b>Postal Code: </b>" + e.row['Postal_Code'].value + "<br>";
-          // e.infoWindowHtml += "<b>Country: </b>" + e.row['Country'].value + "<br>";
-          // e.infoWindowHtml += "<b>Telephone: </b>" + e.row['Telephone'].value + "<br>";
-          // if (e.row['Email'].value != '' ) {
-          //   e.infoWindowHtml += "<b>Email: </b>" + e.row['Email'].value + "<br>";
-          // }
-          // if (e.row['Web_URL'].value != '' ) {
-          //   e.infoWindowHtml += "<b>Website: </b>" + e.row['Web_URL'].value + "<br>";
-          // }
 
   },
 
@@ -417,7 +397,7 @@ displayList: function(json) {
     results.append("<li><span class='lead'>No results found</span></li>");
   }
   else {
-    template = "<table class='table table-bordered table-hover table-condensed'>";
+    template = "<table id='results-table' class='table table-bordered table-hover table-condensed'>";
     template = template.concat("<thead><tr><th>Type</th><th>Name</th><th>City</th><th>State</th><th>Country</th></tr></thead>");
 
     template = template.concat("<tbody>");
