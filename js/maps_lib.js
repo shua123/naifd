@@ -362,7 +362,7 @@ var MapsLib = {
       results.append(template);
       //If MapsLib.currentPinpoint is null, use first result record location
       if (( ($("#stateDD").val() != '') || ($("#cityDD").val() != '') ) && MapsLib.counter > 1){
-          var thisCoordinate = MapsLib.data[0][10].split(",");
+          var thisCoordinate = MapsLib.data[0][9].split(",");
           centerLat = thisCoordinate[0];
           centerLong = thisCoordinate[1];
           newcenter = new google.maps.LatLng(centerLat,centerLong);
