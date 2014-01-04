@@ -351,13 +351,20 @@ var MapsLib = {
     }
     else {
       template = "<table id='results-table' class='table table-bordered table-hover table-condensed'>";
-      template = template.concat("<thead><tr><th>Type</th><th>Name</th><th>City</th><th>State</th><th>Country</th></tr></thead>");
+      template = template.concat("<thead><tr><th>Type</th><th>Name</th><th>Location</th></tr></thead>");
 
       template = template.concat("<tbody>");
       for (var row in MapsLib.data) {
-         template = template.concat("<tr onclick='javascript:MapsLib.openWindowTable(" + row + "); '><td>" + MapsLib.data[row][0] + "</td><td>" + MapsLib.data[row][2] + "</td><td>" + MapsLib.data[row][5] + "</td><td>" + MapsLib.data[row][6] + "</td><td>" + MapsLib.data[row][8] + "</td></tr>");
+         template = template.concat("<tr onclick='javascript:MapsLib.openWindowTable(" + row + "); '><td>" + MapsLib.data[row][0] + "</td><td>" + MapsLib.data[row][2] + "</td><td>" + MapsLib.data[row][5] + ", " + MapsLib.data[row][6] + " " + MapsLib.data[row][8] + "</td></tr>");
 
       }
+      // template = template.concat("<thead><tr><th>Type</th><th>Name</th><th>City</th><th>State</th><th>Country</th></tr></thead>");
+
+      // template = template.concat("<tbody>");
+      // for (var row in MapsLib.data) {
+      //    template = template.concat("<tr onclick='javascript:MapsLib.openWindowTable(" + row + "); '><td>" + MapsLib.data[row][0] + "</td><td>" + MapsLib.data[row][2] + "</td><td>" + MapsLib.data[row][5] + "</td><td>" + MapsLib.data[row][6] + "</td><td>" + MapsLib.data[row][8] + "</td></tr>");
+
+      // }
       template = template.concat("</tbody></table>");
       results.append(template);
       //If MapsLib.currentPinpoint is null, use first result record location

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+</head>
+<body>
+<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+
+<iframe id="mytest" class='span12' src="index.html">
+  <p>Your browser does not support iframes.</p>
+</iframe>
+<script type='text/javascript'>
+      //<![CDATA[
+        $(window).resize(function () {
+          var h = $(window).height(),
+         // var w = $(window).width(),
+            offsetTop = 10; // Calculate the top offset
+        
+          $('#mytest').css('height', (h - offsetTop));
+          //$('#mytest').css('width', (w - offsetTop));
+
+        }).resize();
+</script>
+
+</body>
+</html>

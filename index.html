@@ -38,16 +38,16 @@
             </div>
         </div>      
 
-        <div class='span5'>
-          <div class='row-fluid'>
+        <div id ='results_list' class='span5'>
+<!--           <div class='row-fluid'>
             <div id='results_list' class='span12'></div>   
-          </div>
+          </div> -->
         </div>
 
         <!-- <div class='navbar-fixed-bottom' > -->
         <div class='container-fixed' >
             <form class="span12 form-inline" id='searchbar'>
-              <div class="span4">Search By: 
+              <div class="span5">Search By: 
                 <select class="input-medium" id="SearchType" onChange="MapsLib.SearchTypeChange(value)">
                   <option value='0'>--Search Type--</option>
                   <option value="1">State / Province</option>
@@ -83,7 +83,7 @@
               </div>
               <div id='input-name' class="span7" style="display:none;">
                 <p> Facility Name: 
-                   <input class='form-control' id='search_name' placeholder='Enter a Facility Name' type='text'/>
+                   <input class='form-control input-medium' id='search_name' placeholder='Enter a Facility Name' type='text'/>
                 <a class='btn btn-primary' id='search' href='#'>
                     <i class='glyphicon glyphicon-search'></i>
                     Search
@@ -92,9 +92,9 @@
               </div>
               <div id='input-address' class="span7" style="display:none;">
                 <p> Address <small>(<a id='find_me' href='#'>find me</a>)</small>
-                   <input class='form-control' id='search_address' placeholder='Enter an address or an intersection' type='text'/>
+                   <input class='form-control input-medium' id='search_address' placeholder='Enter an address or an intersection' type='text'/>
                     within
-                    <select id='search_radius'>
+                    <select class='input-small' id='search_radius'>
                       <option value='3220'>2 miles</option>
                       <option value='8050'>5 miles</option>
                       <option value='16100'>10 mile</option>
