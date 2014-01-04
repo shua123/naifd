@@ -38,15 +38,10 @@
             </div>
         </div>      
 
-        <div id ='results_list' class='span5'>
-<!--           <div class='row-fluid'>
-            <div id='results_list' class='span12'></div>   
-          </div> -->
-        </div>
+        <div id ='results_list' class='span5'></div>
+      </div>
 
-        <!-- <div class='navbar-fixed-bottom' > -->
-        <div class='container-fixed' >
-            <form class="span12 form-inline controls-row" id='searchbar'>
+        <div class='controls controls-row' id='searchbar' >
               <div class="input-append input-prepend span4">
                 <span class='add-on'>Search By:</span>
                 <select class="input-medium" id="SearchType" onChange="MapsLib.SearchTypeChange(value)">
@@ -79,7 +74,7 @@
                   <option value="">-- Select a Railroad --</option>
                   <option value="">Loading Roalroads...</option>
               </select>
-              <div id='input-name' class="input-append span7" style="display:none;">
+              <div id='input-name' class="input-append span6" style="display:none;">
                 <p> Facility Name: 
                    <input class='form-control input-large' id='search_name' placeholder='Enter a Facility Name' type='text'/>
                 <a class='btn btn-primary' id='search' href='#'>
@@ -88,7 +83,7 @@
                   </a>
                 </p>
               </div>
-              <div id='input-address' class="input-append span7" style="display:none;">
+              <div id='input-address' class="input-append span6" style="display:none;">
                 <p> Address <small>(<a id='find_me' href='#'>find me</a>)</small>
                    <input class='form-control input-large' id='search_address' placeholder='Enter an address or an intersection' type='text'/>
                     within
@@ -107,9 +102,8 @@
                 </p>
               </div>
               
-            </form>
+            </div>
 
-        </div>
 
       </div>
     </div>
@@ -124,12 +118,13 @@
     <script type="text/javascript" src="js/maps_lib.js"></script>
     <script type='text/javascript'>
       //<![CDATA[
+
         $(window).resize(function () {
+          var searchHeight = $('#searchbar').height();
           var h = $(window).height(),
-            offsetTop = 60; // Calculate the top offset
+          offsetTop = searchHeight + 20; // Calculate the top offset
         
           $('#map_canvas').css('height', (h - offsetTop));
-          $('#results_canvas').css('height', (h - offsetTop));
           $('#results_list').css('height', (h - offsetTop));
           $('#legend').css('bottom', ( offsetTop + 45));
 
@@ -156,6 +151,18 @@
             MapsLib.doSearch();
           });
           
+          //Adjust map and table height to correspond with searchbar height change
+          $('#SearchType').change(function(){
+            var searchHeight = $('#searchbar').height();
+            var h = $(window).height(),
+            offsetTop = searchHeight + 20; // Calculate the top offset
+          
+            $('#map_canvas').css('height', (h - offsetTop));
+            $('#results_list').css('height', (h - offsetTop));
+            $('#legend').css('bottom', ( offsetTop + 45));
+
+          });
+          
           $('#search').click(function(){
             MapsLib.doSearch();
           });
@@ -172,6 +179,13 @@
           $('#reset').click(function(){
             $.address.parameter('address','');
             MapsLib.initialize(); 
+            var searchHeight = $('#searchbar').height();
+            var h = $(window).height(),
+            offsetTop = searchHeight + 20; // Calculate the top offset
+          
+            $('#map_canvas').css('height', (h - offsetTop));
+            $('#results_list').css('height', (h - offsetTop));
+            $('#legend').css('bottom', ( offsetTop + 45));
             return false;
           });
           

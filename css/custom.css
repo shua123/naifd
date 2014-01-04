@@ -28,6 +28,9 @@ a:hover { color: #4B58A6; }
   left:10;
   }
 
+#searchbar {
+  padding-top: 5px;
+}
 
 .filter-box { 
   height: 15px; 
