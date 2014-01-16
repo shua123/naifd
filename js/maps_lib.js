@@ -385,7 +385,7 @@ var MapsLib = {
 
   // windowControl: Controls the window that displays when you click on a marker on the map.
   windowControl: function(e, infoWindow, map) {
-    e.infoWindowHtml = "<div id='infoWindow'>";
+    e.infoWindowHtml = "<div id='infowindow'>";
     e.infoWindowHtml += "<b>" + e.row['Facility_Name'].value + "</b><br>";
     e.infoWindowHtml += "<b>Facility Type: </b>" + e.row['Facility_Type'].value + "<br>";
     if (e.row['Railroad'].value != '' ) {

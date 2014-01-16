@@ -5,6 +5,12 @@ a:hover { color: #4B58A6; }
   max-width: none;
 }
 
+#infowindow {
+  line-height:1.35;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
 #map_canvas {
   line-height:1.35;
   overflow:hidden;
@@ -31,6 +37,7 @@ a:hover { color: #4B58A6; }
 #searchbar {
   padding-top: 5px;
 }
+
 
 .filter-box { 
   height: 15px; 
