@@ -258,11 +258,12 @@ var MapsLib = {
       MapsLib.searchRadiusCircle = new google.maps.Circle(circleOptions);
   },
 
-  query: function(selectColumns, whereClause, callback) {
+  query: function(selectColumns, whereClause, sortColumn, callback) {
     var queryStr = [];
     queryStr.push("SELECT " + selectColumns);
     queryStr.push(" FROM " + MapsLib.fusionTableId);
     queryStr.push(" WHERE " + whereClause);
+    queryStr.push(" ORDER BY " + sortColumn);
 
     var sql = encodeURIComponent(queryStr.join(" "));
     $.ajax({url: "https://www.googleapis.com/fusiontables/v1/query?sql="+sql+"&callback="+callback+"&key="+MapsLib.googleApiKey, dataType: "jsonp"});
