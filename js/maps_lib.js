@@ -116,7 +116,7 @@ var MapsLib = {
     var sortColumn = "State_Province";
 
     //-----custom filters-------
-    //statesearch = $("#stateDD").val();
+    // 
 
     if ( $("#stateDD").val() != ''){
       whereClause += " AND 'State_Province' = '" + $("#stateDD").val() + "'";
@@ -492,7 +492,7 @@ var MapsLib = {
   StateDropdown: function(json){
     MapsLib.handleError(json);
     var statedata = json["rows"];
-    var stateDD = "<select id= 'stateDD' onchange='MapsLib.doSearch()' class=''>";
+    var stateDD = "<select id='stateDD' onchange='MapsLib.doSearch()' class='dropdown span4'>";
     stateDD += '<option value="">-- Select a State / Province --</option>';
     if (statedata == null) { 
       stateDD += "<option value ='Not Good'>Problem retrieving data. Please reload.</option>";
@@ -507,7 +507,7 @@ var MapsLib = {
   CityDropdown: function(json){
     MapsLib.handleError(json);
     var citydata = json["rows"];
-    var cityDD = "<select id= 'cityDD' onchange='MapsLib.doSearch()' class=''>";
+    var cityDD = "<select id= 'cityDD' onchange='MapsLib.doSearch()' class='dropdown span4'>";
     cityDD += '<option value="">-- Select a City --</option>';
     if (citydata == null) { 
       cityDD += "<option value ='Not Good'>Problem retrieving data. Please reload.</option>";
@@ -522,7 +522,7 @@ var MapsLib = {
   FacilityTypeDropdown: function(json){
     MapsLib.handleError(json);
     var factypedata = json["rows"];
-    var facilitytypeDD = "<select id= 'facilitytypeDD' onchange='MapsLib.doSearch()' class=''>";
+    var facilitytypeDD = "<select id= 'facilitytypeDD' onchange='MapsLib.doSearch()' class='dropdown span4'>";
     facilitytypeDD += '<option value="">-- Select a Facility Type --</option>';
     if (factypedata == null) { 
       facilitytypeDD += "<option value ='Not Good'>Problem retrieving data. Please reload.</option>";
@@ -537,7 +537,7 @@ var MapsLib = {
   RailroadDropdown: function(json){
     MapsLib.handleError(json);
     var railroaddata = json["rows"];
-    var railroadDD = "<select id= 'railroadDD' onchange='MapsLib.doSearch()' class=''>";
+    var railroadDD = "<select id= 'railroadDD' onchange='MapsLib.doSearch()' class='dropdown span4'>";
     railroadDD += '<option value="">-- Select a Railroad --</option>';
     if (railroaddata == null) { 
       railroadDD += "<option value ='Not Good'>Problem retrieving data. Please reload.</option>";
