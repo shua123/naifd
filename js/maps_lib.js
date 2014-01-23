@@ -501,7 +501,7 @@ var MapsLib = {
       stateDD += "<option value='" + statedata[row][0] + "'>" + statedata[row][0] + "</option>";
     }
     stateDD += "</select>";
-    $('#stateDD').html(stateDD);
+    $('#stateDiv').html(stateDD);
   },
 
   CityDropdown: function(json){
@@ -589,8 +589,8 @@ var MapsLib = {
 
       MapsLib.queryDD("State_Province", "MapsLib.StateDropdown");
 
-      $("#stateDD").show();
-      $("#stateDD").show();
+      // $("#stateDD").show();
+      $("#stateDiv").show();
       $("#input-address").hide();
       $("#cityDD").hide();
       $("#facilitytypeDD").hide();
