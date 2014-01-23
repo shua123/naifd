@@ -516,7 +516,7 @@ var MapsLib = {
       cityDD += "<option value='" + citydata[row][0] + "'>" + citydata[row][0] + "</option>";
     }
     cityDD += "</select>";
-    $('#cityDD').html(cityDD);
+    $('#cityDiv').html(cityDD);
   },
 
   FacilityTypeDropdown: function(json){
@@ -531,7 +531,7 @@ var MapsLib = {
       facilitytypeDD += "<option value='" + factypedata[row][0] + "'>" + factypedata[row][0] + "</option>";
     }
     facilitytypeDD += "</select>";
-    $('#facilitytypeDD').html(facilitytypeDD);
+    $('#facilitytypeDiv').html(facilitytypeDD);
   },
 
   RailroadDropdown: function(json){
@@ -546,7 +546,7 @@ var MapsLib = {
       railroadDD += "<option value='" + railroaddata[row][0] + "'>" + railroaddata[row][0] + "</option>";
     }
     railroadDD += "</select>";
-    $('#railroadDD').html(railroadDD);
+    $('#railroadDiv').html(railroadDD);
   },
 
   // GetNameList: Get Facility Names list for autocomplete
@@ -575,11 +575,11 @@ var MapsLib = {
       $("#facilitytypeDD").val('');
       $("#railroadDD").val('');
       $("#input-address").hide();
-      $("#stateDD").hide();
-      $("#cityDD").hide();
-      $("#facilitytypeDD").hide();
+      $("#stateDiv").hide();
+      $("#cityDiv").hide();
+      $("#facilitytypeDiv").hide();
       $("#input-name").hide();
-      $("#railroadDD").hide();
+      $("#railroadDiv").hide();
     }
     else if (option == "1"){
       $("#cityDD").val('');
@@ -592,10 +592,10 @@ var MapsLib = {
       // $("#stateDD").show();
       $("#stateDiv").show();
       $("#input-address").hide();
-      $("#cityDD").hide();
-      $("#facilitytypeDD").hide();
+      $("#cityDiv").hide();
+      $("#facilitytypeDiv").hide();
       $("#input-name").hide();
-      $("#railroadDD").hide();
+      $("#railroadDiv").hide();
     }
     else if (option == "2"){
       $("#stateDD").val('');
@@ -604,12 +604,12 @@ var MapsLib = {
       $("#railroadDD").val('');
       MapsLib.queryDD("City", "MapsLib.CityDropdown");
 
-      $("#cityDD").show();
+      $("#cityDiv").show();
       $("#input-address").hide();
-      $("#stateDD").hide();
-      $("#facilitytypeDD").hide();
+      $("#stateDiv").hide();
+      $("#facilitytypeDiv").hide();
       $("#input-name").hide();
-      $("#railroadDD").hide();
+      $("#railroadDiv").hide();
     }
     else if (option == "3"){
       $("#stateDD").val('');
@@ -618,12 +618,12 @@ var MapsLib = {
       $("#railroadDD").val('');
       MapsLib.queryDD("Facility_Type", "MapsLib.FacilityTypeDropdown");
 
-      $("#facilitytypeDD").show();
+      $("#facilitytypeDiv").show();
       $("#input-address").hide();
-      $("#stateDD").hide();
-      $("#cityDD").hide();
+      $("#stateDiv").hide();
+      $("#cityDiv").hide();
       $("#input-name").hide();
-      $("#railroadDD").hide();
+      $("#railroadDiv").hide();
     }
     else if (option == "4"){
       $("#stateDD").val('');
@@ -633,10 +633,10 @@ var MapsLib = {
       MapsLib.queryDD("Facility_Name", "MapsLib.GetNameList");
       $("#input-name").show();
       $("#input-address").hide();
-      $("#stateDD").hide();
-      $("#cityDD").hide();
-      $("#facilitytypeDD").hide();
-      $("#railroadDD").hide();
+      $("#stateDiv").hide();
+      $("#cityDiv").hide();
+      $("#facilitytypeDiv").hide();
+      $("#railroadDiv").hide();
     }
     else if (option == "5"){
       $("#stateDD").val('');
@@ -646,10 +646,10 @@ var MapsLib = {
       $("#search_name").val('');
       $("#input-name").hide();
       $("#input-address").show();
-      $("#stateDD").hide();
-      $("#cityDD").hide();
-      $("#facilitytypeDD").hide();
-      $("#railroadDD").hide();
+      $("#stateDiv").hide();
+      $("#cityDiv").hide();
+      $("#facilitytypeDiv").hide();
+      $("#railroadDiv").hide();
     }
     else if (option == "6"){
       $("#stateDD").val('');
@@ -659,10 +659,10 @@ var MapsLib = {
       MapsLib.queryDD("Railroad", "MapsLib.RailroadDropdown");
       $("#input-name").hide();
       $("#input-address").hide();
-      $("#stateDD").hide();
-      $("#cityDD").hide();
-      $("#facilitytypeDD").hide();
-      $("#railroadDD").show();
+      $("#stateDiv").hide();
+      $("#cityDiv").hide();
+      $("#facilitytypeDiv").hide();
+      $("#railroadDiv").show();
 
     }
   }
