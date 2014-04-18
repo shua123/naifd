@@ -6,42 +6,23 @@
 <body>
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 
-<row>
 <div class='container-fluid'>
-<iframe id="iframe" class='span12' src="index.html">
+<iframe id="mytest" class='span12' src="index.html">
   <p>Your browser does not support iframes.</p>
 </iframe>
 </div>
-</row>
 <script type='text/javascript'>
-//       //<![CDATA[
-//         $(window).resize(function () {
-//           var h = $(window).height(),
-//          // var w = $(window).width(),
-//             offsetTop = 10; // Calculate the top offset
-        
-//           $('#mytest').css('height', (h - offsetTop));
-//           //$('#mytest').css('width', (w - offsetTop));
-
-//         }).resize();
-
- $(function() {
-   window.updateIframe = function() {
-     var h = $(window).height();
-     $("#iframe").height(h - 10);
-   }
-   window.updateIframe();
-   window.resize(window.updateIframe);
-
- });
-
- $(window).resize(function () {
+      //<![CDATA[
+        $(window).resize(function () {
           var h = $(window).height(),
-                  offsetTop = 10; // Calculate the top offset      
-          $("#iframe").height(h - 10);
-        }).resize();
+         // var w = $(window).width(),
+            offsetTop = 10; // Calculate the top offset
+        
+          $('#mytest').css('height', (h - offsetTop));
+          //$('#mytest').css('width', (w - offsetTop));
 
- </script>
+        }).resize();
+</script>
 
 </body>
 </html>

@@ -1,0 +1,176 @@
+/* NAIFD Custom Styles */
+/* Version: 20 JAN 2014 - Bob Rast */
+a {
+	color: #4B58A6;
+}
+a:hover {
+	color: #4B58A6;
+}
+#map_canvas img {
+	max-width: none;
+}
+#results_list {
+	overflow-y: auto;
+	height: 100%;
+}
+#infowindow {
+  line-height:1.35;
+  overflow:hidden;
+  white-space:nowrap;
+}
+#legend {
+	background: white;
+	padding: 10px;
+	position: absolute;
+	left: 10;
+}
+.boxshadow 
+{
+  -moz-box-shadow: 3px 3px 5px #535353;
+  -webkit-box-shadow: 3px 3px 5px #535353;       
+  box-shadow: 3px 3px 5px #535353;
+}
+.roundbox
+{  
+  -moz-border-radius: 6px 6px 6px 6px;
+  -webkit-border-radius: 6px;  
+  border-radius: 6px 6px 6px 6px;
+  border: solid 2px steelblue;
+}
+.filter-box {
+	height: 15px;
+	width: 15px;
+	display: inline-block;
+ *border-right-width: 2px;
+ *border-bottom-width: 2px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding;
+	background-clip: padding-box;
+}
+.filter-yellow {
+	background-color: #FBF358;
+}
+.filter-green {
+	background-color: #00E13C;
+}
+.filter-blue {
+	background-color: #5781FC;
+}
+.filter-purple {
+	background-color: #7C54FB;
+}
+.filter-red {
+	background-color: #FB6353;
+}
+canvas {
+	-ms-touch-action: double-tap-zoom;
+}
+.container-fluid .row-fluid .container-fixed #searchbar {
+	margin-top: 1em;
+}
+.table td {
+	font-size: 11px;
+}
+.container-fluid {
+	padding: 0;
+}
+/*Map Page Secondary Menu*/
+#naifd ul.inline > li, ol.inline > li {
+	display: inline-block;
+	font-weight: 500;
+	padding-right: 5px;
+	padding-left: 5px;
+	border-right: 1px solid #006453;
+}
+#naifd .main-content .container .row .span12 .row.clear-both .nav .inline .naifd.last {
+	border: none;
+}
+#naifd .row-fluid .span5, #naifd .row-fluid .span4 { /* closes margin between map and table */
+	display: block;
+	width: 100%;
+	min-height: 30px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	float: left;
+	margin-left: 1.074468085106383%;
+*margin-left:1.074468085106383%;
+}
+
+.container-fluid .row-fluid .container-fluid #searchbar {
+	display: inline;
+	vertical-align: middle;
+}
+#searchbar .span4 #reset,
+#searchbar #input-name p #search,
+#searchbar #input-address p #search2 {
+	margin-bottom: 1em;
+}
+#naifd .accordion-inner
+{
+	border-top: 1px solid #e5e5e5;
+}
+
+#naifd.container-fluid{
+*zoom:1;
+	padding: 0px;
+}
+.pad1m { padding-top:1em; padding-left:1em;}
+.container-fluid #searchbar {
+	padding-top: 1em;
+}
+.indent1 { margin-left:1em; }
+.indent2 { margin-left:2em; }
+#naifd .main-content .container .row .nav {
+	margin-left: -0.5em;
+}
+@media (max-width:768px)
+{
+	#naifd .main-content .container .row .span12 p {
+	padding-left: 1em;
+	margin-right: auto;
+	margin-left: auto;
+}
+#naifd .main-content .container .row .span12 .row .container-fluid #directory {
+	padding-left: 0.25em;
+}
+}
+
+#naifd .main-content .container .row .nav.visible-desktop.visible-tablet .well.inline .naifd.last {
+	border-right-style: none;
+}
+
+#naifd .main-content .container .row .span12 .row .row-fluid .indent20 {
+	padding-left: 20px;
+	padding-top: 1em;
+}
+
+#naifd .main-content .container .row .span12 .row #accordion2 .accordion-group .accordion-heading {
+	margin-left: 20px;
+}
+#naifd .main-content .container .row .span12 .row #accordion2 .accordion-group {
+}
+/* headline short lines
+================================================== */
+.short_headline {
+	border-bottom: 1px solid #d8dfe5;
+    margin:0 0 1em 0;
+    text-transform: lowercase;
+    padding-bottom:9px;
+    line-height:normal;
+}
+.short_headline span {
+    border-bottom:5px solid #d8dfe5;
+    padding-bottom:10px;
+}
+
+h5 + .short_headline,
+.row-fluid + .short_headline { margin-top: 3% }
+
+ 
+.short_headline.margin-top {
+    margin:2em 0 1em 0;
+}

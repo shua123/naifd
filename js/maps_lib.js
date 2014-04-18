@@ -116,7 +116,7 @@ var MapsLib = {
     var sortColumn = "State_Province";
 
     //-----custom filters-------
-    // 
+    //statesearch = $("#stateDD").val();
 
     if ( $("#stateDD").val() != ''){
       whereClause += " AND 'State_Province' = '" + $("#stateDD").val() + "'";
@@ -127,7 +127,7 @@ var MapsLib = {
       sortColumn = "Facility_Name";
     }
     if ( $("#facilitytypeDD").val() != ''){
-      whereClause += " AND 'Facility_Type' = '" + $("#facilitytypeDD").val() + "'";
+      whereClause += " AND 'col2\x3e\x3e0' = '" + $("#facilitytypeDD").val() + "'";
       sortColumn = "State_Province";
     }
     if ($("#search_name").val() != ''){
@@ -340,7 +340,7 @@ var MapsLib = {
   
   // Query the table for the columns specified in "selectColumns"
   getList: function(whereClause, sortColumn) {
-    var selectColumns = "Facility_Type, Railroad, Facility_Name, Address1, Address2, City, State_Province, Postal_Code, Country, latlong, Telephone, Email, Web_URL, 'IANA Facility Code', 'SPLC Code'";
+    var selectColumns = "'col2\x3e\x3e0', Railroad, Facility_Name, Address1, Address2, City, State_Province, Postal_Code, Country, latlong, Telephone, Email, Web_URL, 'IANA Facility Code', 'SPLC Code'";
     MapsLib.query(selectColumns, whereClause, sortColumn, "MapsLib.displayList");
   },
 
@@ -492,7 +492,7 @@ var MapsLib = {
   StateDropdown: function(json){
     MapsLib.handleError(json);
     var statedata = json["rows"];
-    var stateDD = "<select id='stateDD' onchange='MapsLib.doSearch()' class='dropdown span4'>";
+    var stateDD = "<select id= 'stateDD' onchange='MapsLib.doSearch()' class=''>";
     stateDD += '<option value="">-- Select a State / Province --</option>';
     if (statedata == null) { 
       stateDD += "<option value ='Not Good'>Problem retrieving data. Please reload.</option>";
@@ -501,13 +501,13 @@ var MapsLib = {
       stateDD += "<option value='" + statedata[row][0] + "'>" + statedata[row][0] + "</option>";
     }
     stateDD += "</select>";
-    $('#stateDiv').html(stateDD);
+    $('#stateDD').html(stateDD);
   },
 
   CityDropdown: function(json){
     MapsLib.handleError(json);
     var citydata = json["rows"];
-    var cityDD = "<select id= 'cityDD' onchange='MapsLib.doSearch()' class='dropdown span4'>";
+    var cityDD = "<select id= 'cityDD' onchange='MapsLib.doSearch()' class=''>";
     cityDD += '<option value="">-- Select a City --</option>';
     if (citydata == null) { 
       cityDD += "<option value ='Not Good'>Problem retrieving data. Please reload.</option>";
@@ -516,13 +516,13 @@ var MapsLib = {
       cityDD += "<option value='" + citydata[row][0] + "'>" + citydata[row][0] + "</option>";
     }
     cityDD += "</select>";
-    $('#cityDiv').html(cityDD);
+    $('#cityDD').html(cityDD);
   },
 
   FacilityTypeDropdown: function(json){
     MapsLib.handleError(json);
     var factypedata = json["rows"];
-    var facilitytypeDD = "<select id= 'facilitytypeDD' onchange='MapsLib.doSearch()' class='dropdown span4'>";
+    var facilitytypeDD = "<select id= 'facilitytypeDD' onchange='MapsLib.doSearch()' class=''>";
     facilitytypeDD += '<option value="">-- Select a Facility Type --</option>';
     if (factypedata == null) { 
       facilitytypeDD += "<option value ='Not Good'>Problem retrieving data. Please reload.</option>";
@@ -531,13 +531,13 @@ var MapsLib = {
       facilitytypeDD += "<option value='" + factypedata[row][0] + "'>" + factypedata[row][0] + "</option>";
     }
     facilitytypeDD += "</select>";
-    $('#facilitytypeDiv').html(facilitytypeDD);
+    $('#facilitytypeDD').html(facilitytypeDD);
   },
 
   RailroadDropdown: function(json){
     MapsLib.handleError(json);
     var railroaddata = json["rows"];
-    var railroadDD = "<select id= 'railroadDD' onchange='MapsLib.doSearch()' class='dropdown span4'>";
+    var railroadDD = "<select id= 'railroadDD' onchange='MapsLib.doSearch()' class=''>";
     railroadDD += '<option value="">-- Select a Railroad --</option>';
     if (railroaddata == null) { 
       railroadDD += "<option value ='Not Good'>Problem retrieving data. Please reload.</option>";
@@ -546,7 +546,7 @@ var MapsLib = {
       railroadDD += "<option value='" + railroaddata[row][0] + "'>" + railroaddata[row][0] + "</option>";
     }
     railroadDD += "</select>";
-    $('#railroadDiv').html(railroadDD);
+    $('#railroadDD').html(railroadDD);
   },
 
   // GetNameList: Get Facility Names list for autocomplete
@@ -575,11 +575,11 @@ var MapsLib = {
       $("#facilitytypeDD").val('');
       $("#railroadDD").val('');
       $("#input-address").hide();
-      $("#stateDiv").hide();
-      $("#cityDiv").hide();
-      $("#facilitytypeDiv").hide();
+      $("#stateDD").hide();
+      $("#cityDD").hide();
+      $("#facilitytypeDD").hide();
       $("#input-name").hide();
-      $("#railroadDiv").hide();
+      $("#railroadDD").hide();
     }
     else if (option == "1"){
       $("#cityDD").val('');
@@ -589,13 +589,13 @@ var MapsLib = {
 
       MapsLib.queryDD("State_Province", "MapsLib.StateDropdown");
 
-      // $("#stateDD").show();
-      $("#stateDiv").show();
+      $("#stateDD").show();
+      $("#stateDD").show();
       $("#input-address").hide();
-      $("#cityDiv").hide();
-      $("#facilitytypeDiv").hide();
+      $("#cityDD").hide();
+      $("#facilitytypeDD").hide();
       $("#input-name").hide();
-      $("#railroadDiv").hide();
+      $("#railroadDD").hide();
     }
     else if (option == "2"){
       $("#stateDD").val('');
@@ -604,12 +604,12 @@ var MapsLib = {
       $("#railroadDD").val('');
       MapsLib.queryDD("City", "MapsLib.CityDropdown");
 
-      $("#cityDiv").show();
+      $("#cityDD").show();
       $("#input-address").hide();
-      $("#stateDiv").hide();
-      $("#facilitytypeDiv").hide();
+      $("#stateDD").hide();
+      $("#facilitytypeDD").hide();
       $("#input-name").hide();
-      $("#railroadDiv").hide();
+      $("#railroadDD").hide();
     }
     else if (option == "3"){
       $("#stateDD").val('');
@@ -618,12 +618,12 @@ var MapsLib = {
       $("#railroadDD").val('');
       MapsLib.queryDD("Facility_Type", "MapsLib.FacilityTypeDropdown");
 
-      $("#facilitytypeDiv").show();
+      $("#facilitytypeDD").show();
       $("#input-address").hide();
-      $("#stateDiv").hide();
-      $("#cityDiv").hide();
+      $("#stateDD").hide();
+      $("#cityDD").hide();
       $("#input-name").hide();
-      $("#railroadDiv").hide();
+      $("#railroadDD").hide();
     }
     else if (option == "4"){
       $("#stateDD").val('');
@@ -633,10 +633,10 @@ var MapsLib = {
       MapsLib.queryDD("Facility_Name", "MapsLib.GetNameList");
       $("#input-name").show();
       $("#input-address").hide();
-      $("#stateDiv").hide();
-      $("#cityDiv").hide();
-      $("#facilitytypeDiv").hide();
-      $("#railroadDiv").hide();
+      $("#stateDD").hide();
+      $("#cityDD").hide();
+      $("#facilitytypeDD").hide();
+      $("#railroadDD").hide();
     }
     else if (option == "5"){
       $("#stateDD").val('');
@@ -646,10 +646,10 @@ var MapsLib = {
       $("#search_name").val('');
       $("#input-name").hide();
       $("#input-address").show();
-      $("#stateDiv").hide();
-      $("#cityDiv").hide();
-      $("#facilitytypeDiv").hide();
-      $("#railroadDiv").hide();
+      $("#stateDD").hide();
+      $("#cityDD").hide();
+      $("#facilitytypeDD").hide();
+      $("#railroadDD").hide();
     }
     else if (option == "6"){
       $("#stateDD").val('');
@@ -659,10 +659,10 @@ var MapsLib = {
       MapsLib.queryDD("Railroad", "MapsLib.RailroadDropdown");
       $("#input-name").hide();
       $("#input-address").hide();
-      $("#stateDiv").hide();
-      $("#cityDiv").hide();
-      $("#facilitytypeDiv").hide();
-      $("#railroadDiv").show();
+      $("#stateDD").hide();
+      $("#cityDD").hide();
+      $("#facilitytypeDD").hide();
+      $("#railroadDD").show();
 
     }
   }
