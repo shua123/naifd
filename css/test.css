@@ -1,0 +1,18 @@
+html, body {
+	height: 100%;
+	margin: 0px;
+	padding: 0px
+	}
+#results_list {
+	overflow-y: auto;
+}
+
+#map_canvas img {
+  max-width: none;
+}
+
+#map_canvas { height: 600px; }
+
+/*body {
+	margin: 1em;
+}*/

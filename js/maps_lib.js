@@ -5,8 +5,8 @@
  * Copyright 2012, Derek Eder
  * Licensed under the MIT license.
  * https://github.com/derekeder/FusionTable-Map-Template/wiki/License
- *
- * Date: 12/10/2012
+ * Updated by Bob Rast/Josh Kalov
+ * Date: 05/11/2016
  *
  */
 
@@ -15,18 +15,19 @@ google.maps.visualRefresh = true;
 
 var MapsLib = MapsLib || {};
 var MapsLib = {
-
+ 
   //Setup section - put your Fusion Table details here
   //Using the v1 Fusion Tables API. See https://developers.google.com/fusiontables/docs/v1/migration_guide for more info
 
   //the encrypted Table ID of your Fusion Table (found under File => About)
   //NOTE: numeric IDs will be depricated soon
   //fusionTableId:      "1iK_5ekxipPJyxyLreYX1YewUU4WE9PnZBT6jXzQ",
-  fusionTableId:      "1fWJNwiy4bhG2TRbsNkZ8eZXuCRjaP1T8tMG7SYE",
+  fusionTableId:      "1v5zREtPGZ_fAnBtriT4njdFS_YKuMzbZTrcyD3x4",
 
   //*New Fusion Tables Requirement* API key. found at https://code.google.com/apis/console/
   //*Important* this key is for demonstration purposes. please register your own.
-  googleApiKey:       "AIzaSyDOGOewmVoa8Y7Okz_Nc1zNI36UzbOC0wY",
+  //googleApiKey:       "AIzaSyDOGOewmVoa8Y7Okz_Nc1zNI36UzbOC0wY",
+  googleApiKey: "AIzaSyDJVYGPiOaeWADSHeJZZ1Nb8gx2m6ld6zo", 
 
   //name of the location column in your Fusion Table.
   //NOTE: if your location column name has spaces in it, surround it with single quotes
@@ -34,7 +35,7 @@ var MapsLib = {
   locationColumn:     "latlong",
   //locationColumn:     "Geocode",
 
-  map_centroid:       new google.maps.LatLng(41.00, -114), //center that your map defaults to
+  map_centroid:       new google.maps.LatLng(39.833333,-98.583333), //center that your map defaults to
   locationScope:      "",      //geographical area appended to all address searches
   recordName:         "result",       //for showing number of results
   recordNamePlural:   "results",
@@ -45,6 +46,7 @@ var MapsLib = {
   currentPinpoint:    null,
   address:            "",
   counter:            0,
+  center:             null, 
 
   initialize: function() {
     $( "#result_count" ).html("");
@@ -67,11 +69,25 @@ var MapsLib = {
 
     // maintains map centerpoint for responsive design
     google.maps.event.addDomListener(map, 'idle', function() {
+        console.log('addDomListener idle')
         MapsLib.calculateCenter();
     });
 
+    google.maps.event.addDomListener(map, 'center_changed', function() {
+        console.log('addDomListener center_changed')
+        //MapsLib.calculateCenter();
+    });
+
+    google.maps.event.addDomListener(map, 'bounds_changed', function() {
+        console.log('addDomListener bounds_changed')
+        //MapsLib.calculateCenter();
+    });
+
     google.maps.event.addDomListener(window, 'resize', function() {
-        map.setCenter(MapsLib.map_centroid);
+        console.log('addDomListener resize')
+        console.log('resize using MapsLib.center = ' + MapsLib.center)
+        map.setCenter(MapsLib.center);
+        //map.setCenter(MapsLib.map_centroid);
     });
 
     
@@ -126,11 +142,15 @@ var MapsLib = {
       whereClause += " AND 'City' = '" + $("#cityDD").val() + "'";
       sortColumn = "Facility_Name";
     }
+    //if ( $("#facilitytypeDD").val() != ''){
+    //  whereClause += " AND 'Facility_Type' = '" + $("#facilitytypeDD").val() + "'";
+    //  sortColumn = "State_Province";
+    //}
     if ( $("#facilitytypeDD").val() != ''){
-      whereClause += " AND 'col2\x3e\x3e0' = '" + $("#facilitytypeDD").val() + "'";
+      whereClause += " AND 'col0\x3e\x3e0' = '" + $("#facilitytypeDD").val() + "'";
       sortColumn = "State_Province";
     }
-    if ($("#search_name").val() != ''){
+	  if ($("#search_name").val() != ''){
       search_name = $("#search_name").val().replace("'", "\\'");
       whereClause += " AND 'Facility_Name' CONTAINS IGNORING CASE '" + search_name + "'";
       sortColumn = "Facility_Name";
@@ -176,6 +196,7 @@ var MapsLib = {
       });
     }
     else { //search without geocoding callback
+      map.setCenter(MapsLib.map_centroid);
       MapsLib.submitSearch(whereClause, sortColumn, map);
     }
   },
@@ -216,7 +237,9 @@ var MapsLib = {
     if (MapsLib.searchRadiusCircle != null)
       MapsLib.searchRadiusCircle.setMap(null);
     MapsLib.infoWindow.close(map);
+    console.log('[clearSearch] map_centroid = ' + MapsLib.map_centroid)
     map.setCenter(MapsLib.map_centroid);
+
     map.setZoom(MapsLib.defaultZoom);
   },
 
@@ -325,7 +348,8 @@ var MapsLib = {
 
   // maintains map centerpoint for responsive design
   calculateCenter: function() {
-    center = map.getCenter();
+    MapsLib.center = map.getCenter();
+    console.log('[calculateCenter] map.getCenter = ' + MapsLib.center)
   },
 
   //converts a slug or query string in to readable text
@@ -340,7 +364,7 @@ var MapsLib = {
   
   // Query the table for the columns specified in "selectColumns"
   getList: function(whereClause, sortColumn) {
-    var selectColumns = "'col2\x3e\x3e0', Railroad, Facility_Name, Address1, Address2, City, State_Province, Postal_Code, Country, latlong, Telephone, Email, Web_URL, 'IANA Facility Code', 'SPLC Code'";
+    var selectColumns = "'Facility_Type', Railroad, Facility_Name, Address1, Address2, City, State_Province, Postal_Code, Country, latlong, Telephone, Email, Web_URL, 'IANA Facility Code', 'SPLC Code'";
     MapsLib.query(selectColumns, whereClause, sortColumn, "MapsLib.displayList");
   },
 
@@ -348,12 +372,14 @@ var MapsLib = {
   displayList: function(json) {
     MapsLib.handleError(json);
     //var data = json["rows"];
+    //console.log('[displayList] json["rows"]' + json["rows"])
     MapsLib.data =json["rows"];
     var template = "";
 
     var results = $("#results_list");
-    results.hide().empty(); //hide the existing list and empty it out first
-
+    results.empty();
+    //results.hide().empty(); //hide the existing list and empty it out first
+    console.log('[displayList] MapsLib.data.length = ' + MapsLib.data.length)
     if (MapsLib.data == null) {
       //clear results list
       results.append("<li><span class='lead'>No results found</span></li>");
