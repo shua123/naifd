@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  * https://github.com/derekeder/FusionTable-Map-Template/wiki/License
  * Updated by Bob Rast/Josh Kalov
- * Date: 05/11/2016
+ * Date: 06/07/2018
  *
  */
 
