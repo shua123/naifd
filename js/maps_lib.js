@@ -69,23 +69,23 @@ var MapsLib = {
 
     // maintains map centerpoint for responsive design
     google.maps.event.addDomListener(map, 'idle', function() {
-        console.log('addDomListener idle')
+        // console.log('addDomListener idle')
         MapsLib.calculateCenter();
     });
 
-    google.maps.event.addDomListener(map, 'center_changed', function() {
-        console.log('addDomListener center_changed')
-        //MapsLib.calculateCenter();
-    });
+    // google.maps.event.addDomListener(map, 'center_changed', function() {
+    //     console.log('addDomListener center_changed')
+    //     //MapsLib.calculateCenter();
+    // });
 
-    google.maps.event.addDomListener(map, 'bounds_changed', function() {
-        console.log('addDomListener bounds_changed')
-        //MapsLib.calculateCenter();
-    });
+    // google.maps.event.addDomListener(map, 'bounds_changed', function() {
+    //     console.log('addDomListener bounds_changed')
+    //     //MapsLib.calculateCenter();
+    // });
 
     google.maps.event.addDomListener(window, 'resize', function() {
-        console.log('addDomListener resize')
-        console.log('resize using MapsLib.center = ' + MapsLib.center)
+        // console.log('addDomListener resize')
+        // console.log('resize using MapsLib.center = ' + MapsLib.center)
         map.setCenter(MapsLib.center);
         //map.setCenter(MapsLib.map_centroid);
     });
@@ -349,7 +349,7 @@ var MapsLib = {
   // maintains map centerpoint for responsive design
   calculateCenter: function() {
     MapsLib.center = map.getCenter();
-    console.log('[calculateCenter] map.getCenter = ' + MapsLib.center)
+    // console.log('[calculateCenter] map.getCenter = ' + MapsLib.center)
   },
 
   //converts a slug or query string in to readable text
